@@ -5,6 +5,7 @@
  const LDI = 0b10011001;
  const PRN = 0b01000011;
  const HLT = 0b00000001;
+ const MUL = 0b10101010;
 /**
  * Class for simulating a simple Computer (CPU & memory)
  */
@@ -59,7 +60,7 @@ class CPU {
         switch (op) {
             case 'MUL':
                 // !!! IMPLEMENT ME
-
+                this.reg[regA] = (this.reg[regB] * this.reg[regA]) & 0xff;
                 break;
         }
     }
@@ -102,9 +103,9 @@ class CPU {
                 this.stopClock();
                 this.PC +=1;
                 break;
-            case ALU:
-                
-                this.pc +=3;
+            case MUL:
+                this.alu("MUL", operandA, operandB);
+                this.PC +=3;
                 break;
             default:
                 console.log("This is not an instruction " + IR.toString(2));
