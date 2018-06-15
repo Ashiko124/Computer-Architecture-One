@@ -28,6 +28,9 @@ class CPU {
 
         // Special-purpose registers
         this.PC = 0; // Program Counter
+        let E = 0; //equal = false
+        let L = 0; // less = false
+        let G = 0; // great = false
     }
     
     /**
@@ -120,9 +123,28 @@ class CPU {
                 this.PC +=2;
                 break;
             case POP:
-            this.reg[operandA] = this.ram.read(this.reg[SP]);
+                this.reg[operandA] = this.ram.read(this.reg[SP]);
                 this.reg[SP]++; 
                 this.PC +=2;
+                break;
+            // Add the CMP instruction and equal flag to your LS-8.
+            case CMP:
+                if(this.reg[operandA] === this.reg[operandB]) {
+                    E = 1;
+                } else {
+                    E = 0;
+                } 
+                if(this.reg[operandA] > this.reg[operandB]) {
+                    G = 1;   
+                } else {
+                    G = 0;
+                }
+                if(this.reg[operandA] < this.reg[operandB]) {
+                    L = 1;    
+                } else {
+                    L = 0;
+                }
+                this.PC +=3;
                 break;
             default:
                 console.log("This is not an instruction " + IR.toString(2));
