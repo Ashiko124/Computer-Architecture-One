@@ -146,6 +146,19 @@ class CPU {
                 }
                 this.PC +=3;
                 break;
+            case JMP:
+                IR = this.reg[operandA];
+                break;
+            case JEQ:
+                if( E === 1) {
+                    this.PC = this.reg[operandA];
+                }
+                break;
+            case JNE:
+                if( E === 0) {
+                    this.PC = this.reg[operandA];
+                }
+                break;
             default:
                 console.log("This is not an instruction " + IR.toString(2));
                 this.stopClock();
